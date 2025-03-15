@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PassportGeneratingSystem</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PassportGeneratingSystem.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-0">
+                        <li class="nav-item align-content-center">
+                            <a class="nav-link text-white fw-bold" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item align-content-center">
+                            <a class="nav-link text-white fw-bold" asp-area="" asp-controller="Home" asp-action="Privacy">Police Verification</a>
+                        </li>
+                        <li class="nav-item align-content-center">
+                            <a class="nav-link text-white fw-bold" asp-area="" asp-controller="Home" asp-action="Privacy">Admin</a>
+                        </li>
+                        <li class="nav-item align-content-center">
+                            <a class="nav-link text-white fw-bold" asp-area="" asp-controller="Home" asp-action="Privacy">Contact Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <img class="title-img" src="/images/hdpp.png" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        @RenderBody()
+    </div>
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

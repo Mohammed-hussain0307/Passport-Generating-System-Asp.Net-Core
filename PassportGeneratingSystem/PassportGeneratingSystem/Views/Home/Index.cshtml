@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var successMessage = TempData["Success"]?.ToString();
+    var errorMessage = TempData["Error"]?.ToString();
+}
+
+@if (successMessage != null)
+{
+    <div class="alert alert-success">
+        <b>Success: </b>@successMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+else if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <b>Error: </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+
+<div class="container d-flex justify-content-between align-items-center">
+    <img src="~/images/pp.png" class="imagepp align-self-start" alt="Image loading" />
+    <div class="card p-4 shadow-lg rounded-4 align-self-center bg-light gap-3" style="width: 350px;">
+        <a asp-action="Create" class="btn btn-primary fw-bolder rounded-pill">
+            <img class="icon navbar-toggler-icon" src="/images/newicon.png" />
+            New User Registration
+        </a>
+        <a asp-action="Login" class="btn btn-success fw-bolder rounded-pill">
+            <img class="icon navbar-toggler-icon" src="/images/exis.png" />
+            Existing User Registration
+        </a>
+        <a asp-controller="Home" asp-action="Create" class="btn btn-info fw-bolder rounded-pill">
+            <img class="icon navbar-toggler-icon" src="/images/track.png" />
+            Track Application Status
+        </a>
+    </div>
+    <img src="~/images/pplogo.jpg" class="imagelogo align-self-end" alt="Image loading" />
+</div>
+

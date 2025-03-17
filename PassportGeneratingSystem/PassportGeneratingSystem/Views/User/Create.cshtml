@@ -1,0 +1,211 @@
+﻿@model PassportGeneratingSystem.Models.UserDetail
+
+@{
+    Layout = null;
+    var successMessage = TempData["Success"]?.ToString();
+    var errorMessage = TempData["Error"]?.ToString();
+}
+
+@if (successMessage != null)
+{
+    <div class="alert alert-success">
+        <b>Success: </b>@successMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+else if (errorMessage != null)
+{
+    <div class="alert alert-danger">
+        <b>Error: </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>User Registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="container mt-4">
+        <h2 class="text-center">Application Form</h2>
+        <form asp-action="Create" class="mt-4 p-4 border rounded shadow-lg bg-light">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">Personal Details</div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="GivenName">Given Name</label>
+                            <input asp-for="GivenName" class="form-control" placeholder="Enter given name" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="SureName">Surname</label>
+                            <input asp-for="SureName" class="form-control" placeholder="Enter sure name" required />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Gender">Gender</label>
+                            <select asp-for="Gender" class="form-control">
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DateOfBirth">Date of Birth</label>
+                            <input asp-for="DateOfBirth" class="form-control" placeholder="Enter Date of birth" type="date" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PlaceOfBirth">Place of Birth</label>
+                            <input asp-for="PlaceOfBirth" class="form-control" placeholder="Enter place of birth" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MaritalStatus">Marital Status</label>
+                            <select asp-for="MaritalStatus" class="form-control">
+                                <option>Single</option>
+                                <option>Married</option>
+                                <option>Widow</option>
+                                <option>Divorced</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EmploymentType">Employment Type</label>
+                            <select asp-for="EmploymentType" class="form-control">
+                                <option>Self-Employee</option>
+                                <option>Un-Employee</option>
+                                <option>Student</option>
+                                <option>HouseWife</option>
+                                <option>Private</option>
+                                <option>Others</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EducationQualification">Education Qualification</label>
+                            <select asp-for="EducationQualification" class="form-control">
+                                <option>10th and above</option>
+                                <option>9th below</option>
+                                <option>Not</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="AadhaarNumber">Aadhar Number</label>
+                            <input asp-for="AadhaarNumber" class="form-control" placeholder="Enter your aadhar(Optional)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">Family Details</div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FatherGivenName">Father GivenName</label>
+                            <input asp-for="FatherGivenName" class="form-control" placeholder="Enter father givenname" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FatherSureName">Father SureName</label>
+                            <input asp-for="FatherSureName" class="form-control" placeholder="Enter father surename" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MotherGivenName">Mother GivenName</label>
+                            <input asp-for="MotherGivenName" class="form-control" placeholder="Enter mother givenname" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MotherSureName">Mother SureName</label>
+                            <input asp-for="MotherSureName" class="form-control" placeholder="Enter mother surename" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="SpousesGivenName">Spouses GivenName</label>
+                            <input asp-for="SpousesGivenName" class="form-control" placeholder="Enter spouse givenname" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="SpousesSureName">Spouses Surename</label>
+                            <input asp-for="SpousesSureName" class="form-control" placeholder="Enter spouse surename" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">Contact Details</div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="HouseStreet">House No/Street</label>
+                            <input asp-for="HouseStreet" class="form-control" placeholder="Enter street name with door no" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="VillageTownCity">Village/Town/City</label>
+                            <input asp-for="VillageTownCity" class="form-control" placeholder="Enter your place" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="AddressState">State</label>
+                            <select id="stateDropdown" asp-for="AddressState" class="form-control">
+                                <option>Select State</option>
+                                <option>TamilNadu</option>
+                                <option>Kerala</option>
+                                <option>Rajasthan</option>
+                                <option>Karnataka</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="AddressDistrict">District</label>
+                            <select id="districtDropdown" asp-for="AddressDistrict" class="form-control">
+                                <option value=""></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PoliceStation">Police Station</label>
+                            <input asp-for="PoliceStation" class="form-control" placeholder="Enter your nearest station " required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Pincode">Pincode</label>
+                            <input asp-for="Pincode" type="tel" class="form-control" placeholder="Enter Pincode " required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MobileNumber">Mobile Number</label>
+                            <input asp-for="MobileNumber" type="tel" class="form-control" placeholder="Enter mobile number" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EmailID">Email</label>
+                            <input asp-for="EmailID" type="email" class="form-control" placeholder="Enter email" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">Emergency Contact</div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ContactName">Contact Name</label>
+                            <input asp-for="ContactName" class="form-control" placeholder="Enter contact name" required />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ContactMobileNumber">Mobile Number</label>
+                            <input asp-for="ContactMobileNumber" type="tel" class="form-control" placeholder="Enter mobile number" required />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg">Save Form</button>
+            </div>
+        </form>
+    </div>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -12,3 +12,25 @@ $(document).ready(function () {
 		$("#content-area").load(pageUrl); // Load content into right panel
 	});
 });
+
+$(document).ready(function () {
+    var districtData = {
+        "TamilNadu": ["Chennai", "Coimbatore", "Madurai", "Tenkasi"],
+        "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode"],
+        "Rajasthan": ["Jaipur", "Udaipur", "Jodhpur"],
+        "Karnataka": ["Bengaluru", "Mysuru", "Hubli"]
+    };
+
+    $("#stateDropdown").change(function () {
+        var selectedState = $(this).val();
+        var districtDropdown = $("#districtDropdown");
+        districtDropdown.empty();
+        districtDropdown.append('<option value="">Select District</option>');
+
+        if (selectedState && districtData[selectedState]) {
+            districtData[selectedState].forEach(function (district) {
+                districtDropdown.append('<option value="' + district + '">' + district + '</option>');
+            });
+        }
+    });
+});

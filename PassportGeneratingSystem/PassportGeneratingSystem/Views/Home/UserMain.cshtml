@@ -17,14 +17,13 @@
 <div class="row">
 <div class="col-md-4" style="margin-left:-50px;">
         <h3 class="text-primary">Applicant Home</h3>        
-        <a asp-action="UserMain" class="list-group-item list-group-item-action load-page">View Saved/Submitted Applications</a>
-        <a asp-action="" class="list-group-item list-group-item-action">Apply for Fresh Passport</a>
-        <a asp-action="" class="list-group-item list-group-item-action">Apply Renewal Passport</a>
+        <a asp-controller="User" asp-action="AllUser" class="list-group-item list-group-item-action load-page">View Saved/Submitted Applications</a>
+        <a asp-controller="User" asp-action="Create" class="list-group-item list-group-item-action load-page">Apply for Fresh Passport</a>
+        <a asp-action="" class="list-group-item list-group-item-action load-page">Apply Renewal Passport</a>
         <a asp-action="" class="list-group-item list-group-item-action text-danger">Logout</a>
 </div>
         <div class="col-md-8">
             <div id="content-area">
-                <h4 class="text-secondary">Select an option from the menu</h4>
             </div>
         </div>
 </div>

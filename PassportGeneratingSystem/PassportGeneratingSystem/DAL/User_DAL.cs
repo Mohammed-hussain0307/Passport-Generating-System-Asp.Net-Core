@@ -67,7 +67,7 @@ namespace PassportGeneratingSystem.DAL
                     while (sqlDataReader.Read())
                     {
                         login.Add(new Models.Login
-                        {
+                        {   
                             LoginID = sqlDataReader["login_id"].ToString(),
                             Password = sqlDataReader["login_password"].ToString()
                         });
@@ -81,5 +81,37 @@ namespace PassportGeneratingSystem.DAL
             return login;
         }
 
+        public List<Models.Login> AdminLogin(Models.Login login)
+        {
+            List<Models.Login> admin = new List<Models.Login>();
+            try
+            {
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPL_Admin";
+                    sqlCommand.Parameters.AddWithValue("@AdminID", login.LoginID);
+                    sqlCommand.Parameters.AddWithValue("@Password", login.Password);
+
+                    sqlConnection.Open();
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                    while (sqlDataReader.Read())
+                    {
+                        admin.Add(new Models.Login
+                        {
+                            LoginID = sqlDataReader["admin_id"].ToString(),
+                            Password = sqlDataReader["admin_password"].ToString()
+                        });
+                    }                    
+                }
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return admin;
+        }
     }
 }

@@ -35,6 +35,7 @@ namespace PassportGeneratingSystem.Controllers
             catch(Exception e)
             {
                 TempData["Error"] = e.Message;
+                return View();
             }
             return View("~/Views/Home/UserMain.cshtml");
         }
@@ -56,15 +57,58 @@ namespace PassportGeneratingSystem.Controllers
             }
         }
 
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             try
             {
-                var user = userDetail_DAL.GetUserById(id);
+                var user = userDetail_DAL.GetUserById(id).FirstOrDefault();
 
                 if(user != null)
                 {
                     return View(user);
+                }
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = e.Message;
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(UserDetail userDetail)
+        {
+            try
+            {
+                bool isUpdate = userDetail_DAL.UpdateUser(userDetail);
+
+                if (isUpdate)
+                {
+                    TempData["Success"] = "Your detail updated";
+                }
+                else
+                {
+                    TempData["Error"] = "Cant update your detail";
+                }
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return View();
+            }
+            return View("~/Views/Home/UserMain.cshtml");
+        }
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                bool isDelete = userDetail_DAL.DeleteUser(id);
+                if (isDelete)
+                {
+                    TempData["Success"] = "Succesfully removed";
                 }
             }
             catch(Exception e)

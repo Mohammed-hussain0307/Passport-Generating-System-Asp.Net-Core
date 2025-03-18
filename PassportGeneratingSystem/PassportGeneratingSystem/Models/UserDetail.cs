@@ -72,5 +72,7 @@ namespace PassportGeneratingSystem.Models
             [Required]
             public long ContactMobileNumber { get; set; }
 
+            public int UserID { get; set; }
+
     }
 }

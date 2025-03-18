@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Server;
 using PassportGeneratingSystem.Models;
 
@@ -84,6 +85,7 @@ namespace PassportGeneratingSystem.DAL
                     {
                         user.Add(new UserDetail
                         {
+                            ID = Convert.ToInt32(sqlDataReader["id"]),
                             GivenName = sqlDataReader["givenName"].ToString(),
                             FatherGivenName = sqlDataReader["fatherGivenName"].ToString(),
                             MobileNumber = Convert.ToInt64(sqlDataReader["mobileNumber"]),
@@ -143,7 +145,7 @@ namespace PassportGeneratingSystem.DAL
                             MobileNumber = Convert.ToInt64(sqlDataReader["mobileNumber"].ToString()),
                             EmailID = sqlDataReader["emailID"].ToString(),
                             ContactName = sqlDataReader["contactName"].ToString(),
-                            ContactMobileNumber = Convert.ToInt64(sqlDataReader["contactMobileNumber"])
+                            ContactMobileNumber = Convert.ToInt64(sqlDataReader["contactMobileNumber"]),
                         });
                     }
                 }
@@ -159,12 +161,70 @@ namespace PassportGeneratingSystem.DAL
         public bool UpdateUser(UserDetail userDetail)
         {
             int check = 0;
-            using (sqlConnection)
+            try
             {
-                SqlCommand sqlCommand = sqlConnection.CreateCommand();
-                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-                sqlCommand.CommandText = ""
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPU_User";
+                    sqlCommand.Parameters.AddWithValue("@ID", userDetail.ID);
+                    sqlCommand.Parameters.AddWithValue("@GivenName", userDetail.GivenName);
+                    sqlCommand.Parameters.AddWithValue("@SureName", userDetail.SureName);
+                    sqlCommand.Parameters.AddWithValue("@Gender", userDetail.Gender);
+                    sqlCommand.Parameters.AddWithValue("@DateOfBirth", userDetail.DateOfBirth);
+                    sqlCommand.Parameters.AddWithValue("@PlaceOfBirth", userDetail.PlaceOfBirth);
+                    sqlCommand.Parameters.AddWithValue("@MaritalStatus", userDetail.MaritalStatus);
+                    sqlCommand.Parameters.AddWithValue("@EmploymentType", userDetail.EmploymentType);
+                    sqlCommand.Parameters.AddWithValue("@EducationQualification", userDetail.EducationQualification);
+                    sqlCommand.Parameters.AddWithValue("@AadhaarNumber", userDetail.AadhaarNumber);
+                    sqlCommand.Parameters.AddWithValue("@FatherGivenName", userDetail.FatherGivenName);
+                    sqlCommand.Parameters.AddWithValue("@FatherSureName", userDetail.FatherSureName);
+                    sqlCommand.Parameters.AddWithValue("@MotherGivenName", userDetail.MotherGivenName);
+                    sqlCommand.Parameters.AddWithValue("@MotherSureName", userDetail.MotherSureName);
+                    sqlCommand.Parameters.AddWithValue("@SpousesGivenName", userDetail.SpousesGivenName);
+                    sqlCommand.Parameters.AddWithValue("@SpousesSureName", userDetail.SpousesSureName);
+                    sqlCommand.Parameters.AddWithValue("@HouseStreet", userDetail.HouseStreet);
+                    sqlCommand.Parameters.AddWithValue("@VillageTownCity", userDetail.VillageTownCity);
+                    sqlCommand.Parameters.AddWithValue("@AddressState", userDetail.AddressState);
+                    sqlCommand.Parameters.AddWithValue("@AddressDistrict", userDetail.AddressDistrict);
+                    sqlCommand.Parameters.AddWithValue("@PoliceStation", userDetail.PoliceStation);
+                    sqlCommand.Parameters.AddWithValue("@Pincode", userDetail.Pincode);
+                    sqlCommand.Parameters.AddWithValue("@MobileNumber", userDetail.MobileNumber);
+                    sqlCommand.Parameters.AddWithValue("@EmailID", userDetail.EmailID);
+                    sqlCommand.Parameters.AddWithValue("@ContactName", userDetail.ContactName);
+                    sqlCommand.Parameters.AddWithValue("@ContactMobileNumber", userDetail.ContactMobileNumber);
+
+                    sqlConnection.Open();
+                    check = sqlCommand.ExecuteNonQuery();
+                }
             }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return check > 0;
+        }
+
+        public bool DeleteUser(int id)
+        {
+            int check = 0;
+            try
+            {
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPD_User";
+                    sqlConnection.Open();
+                    check = sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return check > 0;
         }
     }
 }

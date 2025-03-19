@@ -20,7 +20,7 @@ namespace PassportGeneratingSystem.DAL
         }
 
         //create user
-        public bool Register(UserDetail userDetail)
+        public bool Register(UserDetail userDetail,int userId)
         {
             int check = 0;
             try {
@@ -54,6 +54,7 @@ namespace PassportGeneratingSystem.DAL
                     sqlCommand.Parameters.AddWithValue("@EmailID", userDetail.EmailID);
                     sqlCommand.Parameters.AddWithValue("@ContactName", userDetail.ContactName);
                     sqlCommand.Parameters.AddWithValue("@ContactMobileNumber", userDetail.ContactMobileNumber);
+                    sqlCommand.Parameters.AddWithValue("@UserID", userId);
 
                     sqlConnection.Open();
                     check = sqlCommand.ExecuteNonQuery();
@@ -67,7 +68,7 @@ namespace PassportGeneratingSystem.DAL
         }
 
         //view all user
-        public List<UserDetail> GetAllUser()
+        public List<UserDetail> GetAllUser(int userId)
         {
             List<UserDetail> user = new List<UserDetail>();
             try
@@ -77,6 +78,7 @@ namespace PassportGeneratingSystem.DAL
                     SqlCommand sqlCommand = sqlConnection.CreateCommand();
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandText = "SPR_AllUser";
+                    sqlCommand.Parameters.AddWithValue("@UserID", userId);
 
                     sqlConnection.Open();
                     SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();

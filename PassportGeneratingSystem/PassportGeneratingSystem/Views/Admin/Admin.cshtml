@@ -1,0 +1,54 @@
+﻿@model Login
+@{
+    ViewData["Title"] = "Admin Login";
+    var successMessage = TempData["Success"]?.ToString();
+    var errorMessage = TempData["Error"]?.ToString();
+}
+
+@if (successMessage != null)
+{
+    <div class="alert alert-success">
+        <b>Success: </b>@successMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+else if (errorMessage != null)
+{
+    <div class="alert alert-danger">
+        <b>Error: </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4 rounded-4" style="width: 400px; margin-top:-50px;">
+        <h2 class="text-center text-primary mb-3">Admin Login</h2>
+        <form asp-action="Admin">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="LoginID" class="form-label fw-bold">Login ID</label>
+                <input asp-for="LoginID" class="form-control rounded-pill" placeholder="Enter your loginID" />
+                <span asp-validation-for="LoginID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label fw-bold">Password</label>
+                <input asp-for="Password" class="form-control rounded-pill" type="password" placeholder="Enter your Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <input type="submit" value="Login" class="btn btn-primary fw-bold rounded-circle text-center" style="width:170px; font-size:20px" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PassportGeneratingSystem.DAL;
 using PassportGeneratingSystem.Models;
 
@@ -6,6 +8,7 @@ namespace PassportGeneratingSystem.Controllers
 {
     public class UserController : Controller
     {
+        public static int userId;
         UserDetail_DAL userDetail_DAL = new UserDetail_DAL();
 
         public IActionResult Create()
@@ -21,7 +24,7 @@ namespace PassportGeneratingSystem.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    isAdded = userDetail_DAL.Register(userDetail);
+                    isAdded = userDetail_DAL.Register(userDetail,userId);
                     if (isAdded)
                     {
                         TempData["Success"] = "Your deatils successfully registered";
@@ -44,10 +47,9 @@ namespace PassportGeneratingSystem.Controllers
         [HttpGet]
         public IActionResult AllUser()
         {
-           // List<UserDetail> userList = new List<UserDetail>();
             try
             {
-                var userList = userDetail_DAL.GetAllUser();
+                var userList = userDetail_DAL.GetAllUser(userId);
                 return View(userList);
             }
             catch(Exception e)
@@ -62,7 +64,7 @@ namespace PassportGeneratingSystem.Controllers
         {
             try
             {
-                var user = userDetail_DAL.GetUserById(id).FirstOrDefault();
+                var user = userDetail_DAL.GetUserById(id);
 
                 if(user != null)
                 {
@@ -111,7 +113,7 @@ namespace PassportGeneratingSystem.Controllers
                     TempData["Success"] = "Succesfully removed";
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 TempData["Error"] = e.Message;
             }

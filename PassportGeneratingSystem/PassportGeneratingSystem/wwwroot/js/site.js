@@ -7,9 +7,9 @@ $(document).ready(function () {
 	$(".load-page").click(function (e) {
 		e.preventDefault(); // Prevent default link behavior
 
-		var pageUrl = $(this).attr("href"); // Get the page URL from href
+		var pageUrl = $(this).attr("href");
 
-		$("#content-area").load(pageUrl); // Load content into right panel
+		$("#content-area").load(pageUrl); 
 	});
 });
 

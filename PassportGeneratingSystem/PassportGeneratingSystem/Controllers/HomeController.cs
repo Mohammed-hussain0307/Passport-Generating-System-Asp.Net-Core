@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PassportGeneratingSystem.DAL;
 using PassportGeneratingSystem.Models;
 
@@ -8,6 +10,8 @@ namespace PassportGeneratingSystem.Controllers;
 public class HomeController : Controller
 {
     User_DAL user = new User_DAL();
+
+    public int userId;
     public IActionResult Index()
     {
         return View();
@@ -92,12 +96,9 @@ public class HomeController : Controller
     {
         return View();
     }
-
-    //public IActionResult Admin(Login login)
-    //{
-    //    try
-    //    {
-
-    //    }
-    //}
+    
+    public IActionResult Contact()
+    {
+        return View();
+    }
 }

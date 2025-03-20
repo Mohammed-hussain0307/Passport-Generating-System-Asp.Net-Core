@@ -209,6 +209,8 @@ else if (errorMessage != null)
         </div>
     </form>
 
+    <a href="@Url.Action("UserMain","Home")">Back to mainpage</a>
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

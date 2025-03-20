@@ -1,7 +1,8 @@
-﻿@*
+﻿﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = null;
     ViewData["Title"] = "User Main Page";
     var successMessage = TempData["Success"]?.ToString();
 }
@@ -13,18 +14,30 @@
         </button>
     </div>
 }
-<div class="container">
-<div class="row">
-<div class="col-md-4" style="margin-left:-50px;">
-        <h3 class="text-primary">Applicant Home</h3>        
-        <a asp-controller="User" asp-action="AllUser" class="list-group-item list-group-item-action load-page">View Saved/Submitted Applications</a>
-        <a asp-controller="User" asp-action="Create" class="list-group-item list-group-item-action load-page">Apply for Fresh Passport</a>
-        <a asp-action="" class="list-group-item list-group-item-action load-page">Apply Renewal Passport</a>
-        <a asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action text-danger">Logout</a>
-</div>
+<html>
+    <head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    </head>
+    <body>
+<div class="container" style="margin-left:-5px;">
+    <div class="row">
+        <div class="col-md-4">
+            <h3 class="text-primary">Applicant Home</h3>
+            <a asp-controller="User" asp-action="AllUser" class="list-group-item list-group-item-action load-page">View Saved/Submitted Applications</a>
+            <a asp-controller="User" asp-action="Create" class="list-group-item list-group-item-action">Apply for Fresh Passport</a>
+            <a asp-action="" class="list-group-item list-group-item-action">Apply Renewal Passport</a>
+            <a asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action text-danger">Logout</a>
+        </div>
         <div class="col-md-8">
             <div id="content-area">
             </div>
         </div>
-</div>
-</div>
+    </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

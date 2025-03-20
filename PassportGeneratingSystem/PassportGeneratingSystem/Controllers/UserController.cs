@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PassportGeneratingSystem.DAL;
@@ -50,7 +51,7 @@ namespace PassportGeneratingSystem.Controllers
             try
             {
                 var userList = userDetail_DAL.GetAllUser(userId);
-                return View(userList);
+                return PartialView(userList);
             }
             catch(Exception e)
             {
@@ -63,13 +64,13 @@ namespace PassportGeneratingSystem.Controllers
         public IActionResult Edit(int id)
         {
             try
-            {
-                var user = userDetail_DAL.GetUserById(id);
+            {                
+              var user = userDetail_DAL.GetUserById(id).FirstOrDefault();
 
-                if(user != null)
-                {
-                    return View(user);
-                }
+              if (user != null)
+              {
+                 return View(user);
+              }
             }
             catch(Exception e)
             {
@@ -83,15 +84,18 @@ namespace PassportGeneratingSystem.Controllers
         {
             try
             {
-                bool isUpdate = userDetail_DAL.UpdateUser(userDetail);
+                if (ModelState.IsValid)
+                {
+                    bool isUpdate = userDetail_DAL.UpdateUser(userDetail);
 
-                if (isUpdate)
-                {
-                    TempData["Success"] = "Your detail updated";
-                }
-                else
-                {
-                    TempData["Error"] = "Cant update your detail";
+                    if (isUpdate)
+                    {
+                        TempData["Success"] = "Your detail updated";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Cant update your detail";
+                    }
                 }
             }
             catch(Exception e)
@@ -99,7 +103,7 @@ namespace PassportGeneratingSystem.Controllers
                 TempData["Error"] = e.Message;
                 return View();
             }
-            return View("~/Views/Home/UserMain.cshtml");
+            return View("UserMain");
         }
 
         [HttpDelete]
@@ -110,14 +114,16 @@ namespace PassportGeneratingSystem.Controllers
                 bool isDelete = userDetail_DAL.DeleteUser(id);
                 if (isDelete)
                 {
-                    TempData["Success"] = "Succesfully removed";
+                    return Ok();
                 }
             }
             catch (Exception e)
             {
                 TempData["Error"] = e.Message;
             }
-            return View();
+            return View("UserMain");
         }
+
+
     }
 }

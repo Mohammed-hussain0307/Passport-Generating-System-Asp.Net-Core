@@ -74,7 +74,6 @@ public class HomeController : Controller
 
                 if (userList.Any(u => u.LoginID == login.LoginID && u.Password == login.Password))
                 {
-                    TempData["Success"] = "Login successfully";
                     return RedirectToAction("UserMain");
                 }
                 else

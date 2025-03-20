@@ -218,6 +218,8 @@ namespace PassportGeneratingSystem.DAL
                     SqlCommand sqlCommand = sqlConnection.CreateCommand();
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandText = "SPD_User";
+                    sqlCommand.Parameters.AddWithValue("@ID", id);
+
                     sqlConnection.Open();
                     check = sqlCommand.ExecuteNonQuery();
                 }

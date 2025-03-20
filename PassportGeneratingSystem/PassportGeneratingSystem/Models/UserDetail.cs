@@ -28,6 +28,8 @@ namespace PassportGeneratingSystem.Models
             public string? MaritalStatus { get; set; }
             public string? EmploymentType { get; set; }
             public string? EducationQualification { get; set; }
+
+            [Required]
             public long? AadhaarNumber { get; set; }
 
             [Required]

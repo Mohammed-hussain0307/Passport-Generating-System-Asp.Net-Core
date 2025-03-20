@@ -4,8 +4,12 @@
 // Write your JavaScript code.
 
 $(document).ready(function () {
+    $("#content-area").load("/User/AllUser");
+});
+
+$(document).ready(function () {
 	$(".load-page").click(function (e) {
-		e.preventDefault(); // Prevent default link behavior
+		e.preventDefault();
 
 		var pageUrl = $(this).attr("href");
 
@@ -34,3 +38,20 @@ $(document).ready(function () {
         }
     });
 });
+
+function confirmDelete(userId) {
+    if (confirm("Are you sure you want to delete this record?")) {
+        fetch(`/User/Delete?id=${userId}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert("Application successfully removed!");
+                    location.reload();
+                } else {
+                    alert("Failed to delete user.");
+                }
+            })
+    }
+}
+

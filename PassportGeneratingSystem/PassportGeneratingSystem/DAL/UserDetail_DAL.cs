@@ -1,6 +1,7 @@
 ﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Server;
+using PassportGeneratingSystem.Controllers;
 using PassportGeneratingSystem.Models;
 
 namespace PassportGeneratingSystem.DAL
@@ -9,7 +10,6 @@ namespace PassportGeneratingSystem.DAL
     {
         private SqlConnection sqlConnection = null;
 
-        //For read the connection string
         public static IConfiguration? configuration { get; set; }
 
         public UserDetail_DAL()
@@ -219,6 +219,32 @@ namespace PassportGeneratingSystem.DAL
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandText = "SPD_User";
                     sqlCommand.Parameters.AddWithValue("@ID", id);
+
+                    sqlConnection.Open();
+                    check = sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return check > 0;
+        }
+
+        public bool Booking(UserDetail userDetail)
+        {
+            int check = 0;
+            try
+            {
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPB_User";
+                    sqlCommand.Parameters.AddWithValue("ID", userDetail.ID);
+                    sqlCommand.Parameters.AddWithValue("@Bookingplace", userDetail.BookingPlace);
+                    sqlCommand.Parameters.AddWithValue("@BookingDate", userDetail.BookingDate);
+                    sqlCommand.Parameters.AddWithValue("@Status", userDetail.status);
 
                     sqlConnection.Open();
                     check = sqlCommand.ExecuteNonQuery();

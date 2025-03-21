@@ -70,12 +70,13 @@ body {
 
 .list-group-item:hover{
     background: #e9ecef;
-    color:black;
     border-radius: 5px;
     transform: translateX(5px) !important;
 }
 
-
+.default{
+    color:black;       
+}
 
 h4 {
     text-align: center;
@@ -123,6 +124,8 @@ tr:hover {
     margin: 2px;
     font-weight:bold;
     font-size:15px;
+    position:relative;
+    transition:none;
 }
 
 .btn-edit {
@@ -153,4 +156,50 @@ tr:hover {
     background-color: #007bff;
     border-radius: 5px;
     text-align: center;
+}
+
+.book {
+    margin-left: 38%;
+    margin-top: 10%;
+    background-color: blueviolet;
+    width: 300px;
+    height:40px;
+    font-size:30px;
+    color:white;
+}
+
+.bookplace {
+    font-size: 20px;
+    margin-left: -30px;
+    margin-top: 20px;
+}
+
+.bookp{
+    margin-left:20px;
+}
+
+.bookd{
+    margin-left:25px;
+}
+
+.booknow{
+    margin-left:180px;
+    margin-top:20px;
+    height:40px;
+    width:90px;
+    background-color:skyblue;
+    cursor:pointer;
+}
+
+.bookp{
+    height:30px;
+}
+
+.bookd{
+    height:25px;
+    width:150px;
+}
+
+.back{
+    margin-left:35%;
 }

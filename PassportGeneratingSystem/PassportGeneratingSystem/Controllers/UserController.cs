@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -39,7 +40,7 @@ namespace PassportGeneratingSystem.Controllers
             catch(Exception e)
             {
                 TempData["Error"] = e.Message;
-                return View();
+                return View("~/Views/Home/UserMain.cshtml");
             }
             return View("~/Views/Home/UserMain.cshtml");
         }
@@ -51,7 +52,7 @@ namespace PassportGeneratingSystem.Controllers
             try
             {
                 var userList = userDetail_DAL.GetAllUser(userId);
-                return PartialView(userList);
+                return View(userList);
             }
             catch(Exception e)
             {
@@ -103,7 +104,7 @@ namespace PassportGeneratingSystem.Controllers
                 TempData["Error"] = e.Message;
                 return View();
             }
-            return View("UserMain");
+            return View("~/Views/Home/UserMain.cshtml");
         }
 
         [HttpDelete]
@@ -121,9 +122,34 @@ namespace PassportGeneratingSystem.Controllers
             {
                 TempData["Error"] = e.Message;
             }
-            return View("UserMain");
+            return View("~/Views/Home/UserMain.cshtml");
         }
 
+        [HttpGet]
+        public IActionResult Booking()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public IActionResult Booking(UserDetail user)
+        {
+            user.status = "submit";
+            try
+            {
+                bool isBooked = false;
+
+                isBooked = userDetail_DAL.Booking(user);
+                if (isBooked)
+                {
+                    TempData["Success"] = "Successfully booked";
+                }
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = e.Message;
+            }
+            return View("~/Views/Home/UserMain.cshtml");
+        }
     }
 }

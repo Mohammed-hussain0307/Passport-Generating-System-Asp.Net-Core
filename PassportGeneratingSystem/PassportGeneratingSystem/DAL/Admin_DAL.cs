@@ -47,5 +47,39 @@ namespace PassportGeneratingSystem.DAL
             }
             return admin;
         }
+
+        public List<UserDetail> Applications()
+        {
+            List<UserDetail> user = new List<UserDetail>();
+            try
+            {
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPA_User";
+
+                    sqlConnection.Open();
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                    while (sqlDataReader.Read())
+                    {
+                        user.Add(new UserDetail
+                        {
+                            ID = Convert.ToInt32(sqlDataReader["id"]),
+                            GivenName = sqlDataReader["givenName"].ToString(),
+                            FatherGivenName = sqlDataReader["fatherGivenName"].ToString(),
+                            MobileNumber = Convert.ToInt64(sqlDataReader["mobileNumber"]),
+                            EmailID = sqlDataReader["emailID"].ToString()
+                        });
+                    }
+                }
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return user;
+        }
     }
 }

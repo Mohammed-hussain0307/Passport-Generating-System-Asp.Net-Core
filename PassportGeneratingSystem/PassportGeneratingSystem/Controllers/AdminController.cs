@@ -40,5 +40,19 @@ namespace PassportGeneratingSystem.Controllers
         {
             return View();
         }
+
+        public IActionResult AllApplication()
+        {
+            try
+            {
+                var adminn = admin.Applications();
+                    return View(adminn);
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return View();
+            }
+        }
     }
 }

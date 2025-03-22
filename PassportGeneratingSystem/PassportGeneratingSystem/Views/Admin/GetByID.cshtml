@@ -1,0 +1,194 @@
+﻿@model PassportGeneratingSystem.Models.UserDetail
+
+@{
+    Layout = null;
+    var successMessage = TempData["Success"]?.ToString();
+    var errorMessage = TempData["Error"]?.ToString();
+}
+
+@if (successMessage != null)
+{
+    <div class="alert alert-success">
+        <b>Success: </b>@successMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+else if (errorMessage != null)
+{
+    <div class="alert alert-danger">
+        <b>Error: </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Update Applicant Detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <h4>Verify User Details</h4>
+    <hr />
+    <form asp-action="Approve" method="post">
+        <input type="hidden" asp-for="ID" />
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">Personal Details</div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="GivenName">Given Name</label>
+                        <label asp-for="GivenName" class="form-control">@Model.GivenName</label> 
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="SureName">Surname</label>
+                        <label asp-for="SureName" class="form-control" >@Model.SureName</label>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Gender">Gender</label>
+                        <label asp-for="Gender" class="form-control">@Model.Gender</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="DateOfBirth">Date of Birth</label>
+                        <label asp-for="DateOfBirth" class="form-control">@Model.DateOfBirth</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="PlaceOfBirth">Place of Birth</label>
+                        <label asp-for="PlaceOfBirth" class="form-control">@Model.PlaceOfBirth</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MaritalStatus">Marital Status</label>                    
+                        <label asp-for="MaritalStatus" class="form-control">@Model.MaritalStatus</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="EmploymentType">Employment Type</label>
+                        <label asp-for="EmploymentType" class="form-control">@Model.EmploymentType</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="EducationQualification">Education Qualification</label>
+                        <label asp-for="EducationQualification" class="form-control">@Model.EducationQualification</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="AadhaarNumber">Aadhar Number</label>
+                        <label asp-for="AadhaarNumber" class="form-control">@Model.AadhaarNumber</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">Family Details</div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FatherGivenName">Father GivenName</label>
+                        <label asp-for="FatherGivenName" class="form-control">@Model.FatherGivenName</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="FatherSureName">Father SureName</label>
+                        <label asp-for="FatherSureName" class="form-control">@Model.FatherSureName</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MotherGivenName">Mother GivenName</label>
+                        <label asp-for="MotherGivenName" class="form-control">@Model.MotherGivenName</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MotherSureName">Mother SureName</label>
+                        <label asp-for="MotherSureName" class="form-control">@Model.MotherSureName</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="SpousesGivenName">Spouses GivenName</label>
+                        <label asp-for="SpousesGivenName" class="form-control">@Model.SpousesGivenName</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="SpousesSureName">Spouses Surename</label>
+                        <label asp-for="SpousesSureName" class="form-control">@Model.SpousesSureName</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">Contact Details</div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="HouseStreet">House No/Street</label>
+                        <label asp-for="HouseStreet" class="form-control">@Model.HouseStreet</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="VillageTownCity">Village/Town/City</label>
+                        <label asp-for="VillageTownCity" class="form-control">@Model.VillageTownCity</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="AddressState">State</label>
+                        <label asp-for="AddressState" class="form-control">@Model.AddressState</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="AddressDistrict">District</label>
+                        <label asp-for="AddressDistrict" class="form-control">@Model.AddressDistrict</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="PoliceStation">Police Station</label>
+                        <label asp-for="PoliceStation" class="form-control">@Model.PoliceStation</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Pincode">Pincode</label>
+                        <label asp-for="Pincode" class="form-control">@Model.Pincode</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MobileNumber">Mobile Number</label>
+                        <label asp-for="MobileNumber" class="form-control">@Model.MobileNumber</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="EmailID">Email</label>
+                        <label asp-for="EmailID" class="form-control">@Model.EmailID</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">Emergency Contact</div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="ContactName">Contact Name</label>
+                        <label asp-for="ContactName" class="form-control">@Model.ContactName</label>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="ContactMobileNumber">Mobile Number</label>
+                        <label asp-for="ContactMobileNumber" class="form-control">@Model.MobileNumber</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center">
+            <button type="submit" name="actionType" value="approve" class="btn btn-outline-success btn-lg">Approved</button>
+            <button type="submit" name="actionType" value="reject" class="btn btn-outline-danger btn-lg">Rejected</button>
+        </div>
+    </form>
+
+    <a href="@Url.Action("AdminMain","Admin")">Back to mainpage</a>
+
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>

@@ -54,5 +54,51 @@ namespace PassportGeneratingSystem.Controllers
                 return View();
             }
         }
+
+        public IActionResult GetByID(int id)
+        {
+            try
+            {
+                var user = admin.GetApplication(id).FirstOrDefault();
+                if(user != null)
+                {
+                    return View(user);
+                }
+                else
+                {
+                    TempData["Error"] = "User not found";
+                    return RedirectToAction("AdminMain");
+                }
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("AdminMain");
+            }            
+        }
+
+        [HttpPost]
+        public IActionResult Approve(UserDetail user,string value)
+        {
+            try
+            {
+                bool isApprove = admin.Approved(user);
+                if (isApprove)
+                {
+                    TempData["Success"] = "Application approved";
+                    return RedirectToAction("AdminMain");
+                }
+                else
+                {
+                    TempData["Error"] = "Cant approve the application";
+                    return View();
+                }
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return View();
+            }
+        }
     }
 }

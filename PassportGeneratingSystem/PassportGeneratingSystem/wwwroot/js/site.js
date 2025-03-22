@@ -8,6 +8,10 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
+    $("#content-admin-area").load("/Admin/AllApplication");
+});
+
+$(document).ready(function () {
     var districtData = {
         "TamilNadu": ["Chennai", "Coimbatore", "Madurai", "Tenkasi"],
         "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode"],

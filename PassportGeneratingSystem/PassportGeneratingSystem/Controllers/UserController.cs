@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using PassportGeneratingSystem.DAL;
 using PassportGeneratingSystem.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace PassportGeneratingSystem.Controllers
 {
@@ -80,32 +81,32 @@ namespace PassportGeneratingSystem.Controllers
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Edit(UserDetail userDetail)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    bool isUpdate = userDetail_DAL.UpdateUser(userDetail);
+        //[HttpPost]
+        //public IActionResult Edit(UserDetail userDetail)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            bool isUpdate = userDetail_DAL.UpdateUser(userDetail);
 
-                    if (isUpdate)
-                    {
-                        TempData["Success"] = "Your detail updated";
-                    }
-                    else
-                    {
-                        TempData["Error"] = "Cant update your detail";
-                    }
-                }
-            }
-            catch(Exception e)
-            {
-                TempData["Error"] = e.Message;
-                return View();
-            }
-            return View("~/Views/Home/UserMain.cshtml");
-        }
+        //            if (isUpdate)
+        //            {
+        //                TempData["Success"] = "Your detail updated";
+        //            }
+        //            else
+        //            {
+        //                TempData["Error"] = "Cant update your detail";
+        //            }
+        //        }
+        //    }
+        //    catch(Exception e)
+        //    {
+        //        TempData["Error"] = e.Message;
+        //        return View();
+        //    }
+        //    return View("~/Views/Home/UserMain.cshtml");
+        //}
 
         [HttpDelete]
         public IActionResult Delete(int id)
@@ -132,20 +133,47 @@ namespace PassportGeneratingSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Booking(UserDetail user)
+        public IActionResult Edit(UserDetail user, string actionType)
         {
-            user.status = "submit";
             try
             {
-                bool isBooked = false;
-
-                isBooked = userDetail_DAL.Booking(user);
-                if (isBooked)
+                if (actionType == "update")
                 {
-                    TempData["Success"] = "Successfully booked";
+                    if (ModelState.IsValid)
+                    {
+                        bool isUpdate = userDetail_DAL.UpdateUser(user);
+
+                        if (isUpdate)
+                        {
+                            TempData["Success"] = "Your detail updated";
+                            return View();
+                        }
+                        else
+                        {
+                            TempData["Error"] = "Cant update your detail";
+                        }
+                    }
+                }
+                else if (actionType == "apply")
+                {
+                    user.status = "submit";
+                    bool isBooked = userDetail_DAL.Booking(user);
+
+                    if (isBooked)
+                    {
+                        TempData["Success"] = "Successfully apply";
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Cant apply your form";
+                    }
+                }
+                else
+                {
+                    TempData["Error"] = "Some error in this user detail";
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 TempData["Error"] = e.Message;
             }

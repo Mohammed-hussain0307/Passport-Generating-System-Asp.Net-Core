@@ -42,5 +42,86 @@ namespace PassportGeneratingSystem.Controllers
         {
             return View();
         }
+
+        public IActionResult AllApplication()
+        {
+            try
+            {
+                var officerr = officer.Applications();
+                return View(officerr);
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return View();
+            }
+        }
+
+        public IActionResult GetByID(int id)
+        {
+            try
+            {
+                var user = officer.GetApplication(id).FirstOrDefault();
+                if (user != null)
+                {
+                    return View(user);
+                }
+                else
+                {
+                    TempData["Error"] = "User not found";
+                    return RedirectToAction("OfficerMain");
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("OfficerMain");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Approved(UserDetail user, string actionType)
+        {
+            try
+            {
+                if (actionType == "verify")
+                {
+                    bool isApprove = officer.Verified(user);
+                    if (isApprove)
+                    {
+                        TempData["Success"] = "Application Verified";
+                        return RedirectToAction("OfficerMain");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Cant verified the application";
+                        return RedirectToAction("OfficerMain");
+                    }
+                }
+                else if (actionType == "reject")
+                {
+                    bool isApprove = officer.Rejected(user);
+                    if (isApprove)
+                    {
+                        TempData["Success"] = "Application rejected";
+                        return RedirectToAction("OfficerMain");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Cant reject the application";
+                        return RedirectToAction("OfficerMain");
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("OfficerMain");
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("OfficerMain");
+            }
+        }
     }
 }

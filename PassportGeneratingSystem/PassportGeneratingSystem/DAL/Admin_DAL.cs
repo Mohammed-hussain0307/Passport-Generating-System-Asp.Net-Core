@@ -159,5 +159,28 @@ namespace PassportGeneratingSystem.DAL
             }
             return check > 0;
         }
+
+        public bool Rejected(UserDetail user)
+        {
+            int check = 0;
+            try
+            {
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPRE_Admin";
+                    sqlCommand.Parameters.AddWithValue("ID", user.ID);
+
+                    sqlConnection.Open();
+                    check = sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return check > 0;
+        }
     }
 }

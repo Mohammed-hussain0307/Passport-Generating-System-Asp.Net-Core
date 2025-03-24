@@ -78,26 +78,47 @@ namespace PassportGeneratingSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Approve(UserDetail user,string value)
+        public IActionResult Approved(UserDetail user,string actionType)
         {
             try
             {
-                bool isApprove = admin.Approved(user);
-                if (isApprove)
+                if (actionType == "approve")
                 {
-                    TempData["Success"] = "Application approved";
-                    return RedirectToAction("AdminMain");
+                    bool isApprove = admin.Approved(user);
+                    if (isApprove)
+                    {
+                        TempData["Success"] = "Application approved";
+                        return RedirectToAction("AdminMain");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Cant approve the application";
+                        return RedirectToAction("AdminMain");
+                    }
+                }
+                else if(actionType == "reject")
+                {
+                    bool isApprove = admin.Rejected(user);
+                    if (isApprove)
+                    {
+                        TempData["Success"] = "Application rejected";
+                        return RedirectToAction("AdminMain");
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Cant reject the application";
+                        return RedirectToAction("AdminMain");
+                    }
                 }
                 else
                 {
-                    TempData["Error"] = "Cant approve the application";
-                    return View();
+                    return RedirectToAction("AdminMain");
                 }
             }
             catch(Exception e)
             {
                 TempData["Error"] = e.Message;
-                return View();
+                return RedirectToAction("AdminMain");
             }
         }
     }

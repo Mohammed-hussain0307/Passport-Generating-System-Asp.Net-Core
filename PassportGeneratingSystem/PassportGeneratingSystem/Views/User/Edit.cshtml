@@ -35,7 +35,7 @@ else if (errorMessage != null)
 </head>
 <body>
 
-<h4>Applicant Details</h4>
+<h4>Reverify your details</h4>
 <hr />
     <form asp-action="Edit" method="post">
         <input type="hidden" asp-for="ID" />
@@ -205,7 +205,8 @@ else if (errorMessage != null)
         </div>
 
         <div class="text-center">
-            <button type="submit" class="btn btn-success btn-lg">Update Form</button>
+            <button type="submit" name="actionType" value="update" class="btn btn-outline-warning btn-lg">Update</button>
+            <button type="submit" name="actionType" value="apply" class="btn btn-outline-success btn-lg">Apply</button>
         </div>
     </form>
 

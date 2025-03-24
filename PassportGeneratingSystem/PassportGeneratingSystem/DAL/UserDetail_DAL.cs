@@ -242,8 +242,6 @@ namespace PassportGeneratingSystem.DAL
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandText = "SPB_User";
                     sqlCommand.Parameters.AddWithValue("ID", userDetail.ID);
-                    sqlCommand.Parameters.AddWithValue("@Bookingplace", userDetail.BookingPlace);
-                    sqlCommand.Parameters.AddWithValue("@BookingDate", userDetail.BookingDate);
                     sqlCommand.Parameters.AddWithValue("@Status", userDetail.status);
 
                     sqlConnection.Open();

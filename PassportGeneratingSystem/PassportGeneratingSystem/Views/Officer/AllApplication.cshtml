@@ -13,10 +13,8 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-
     <h4>Application Details</h4>
     <hr />
-
     <table>
         <thead>
             <tr>
@@ -36,8 +34,7 @@
                     <td>@user.MobileNumber</td>
                     <td>@user.EmailID</td>
                     <td class="action-links">
-                        <a href="@Url.Action("Edit", "User", new { id = user.ID })" class="btn btn-apply">Apply Booking</a>
-                        <a onclick="confirmDelete(@user.ID)" class="btn btn-delete">Delete</a>
+                        <a href="@Url.Action("GetByID", "Officer", new { id = user.ID })" class="btn btn-apply">Verify Details</a>
                     </td>
                 </tr>
             }
@@ -46,3 +43,4 @@
     <script src="~/js/site.js"></script>
 </body>
 </html>
+

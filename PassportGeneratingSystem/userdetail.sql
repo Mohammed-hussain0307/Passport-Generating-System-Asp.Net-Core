@@ -1,9 +1,5 @@
 use passport;
 
-drop table user_detail
-
-select * from user_detail
-
 ALTER TABLE user_detail ADD message_info VARCHAR(50)
 ALTER TABLE user_detail ADD passport_number VARCHAR(10)
 

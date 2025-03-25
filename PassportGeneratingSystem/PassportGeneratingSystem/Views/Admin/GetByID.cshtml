@@ -28,7 +28,7 @@ else if (errorMessage != null)
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Update Applicant Detail</title>
+    <title>Admin page</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -171,6 +171,18 @@ else if (errorMessage != null)
                     <div class="col-md-6 mb-3">
                         <label asp-for="ContactMobileNumber">Mobile Number</label>
                         <label asp-for="ContactMobileNumber" class="form-control">@Model.MobileNumber</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">Message About Application</div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="MessageInfo">Message</label>
+                        <input asp-for="MessageInfo" class="form-control" placeholder="type here" required />
                     </div>
                 </div>
             </div>

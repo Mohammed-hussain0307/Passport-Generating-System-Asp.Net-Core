@@ -127,6 +127,7 @@ namespace PassportGeneratingSystem.DAL
                             EmailID = sqlDataReader["emailID"].ToString(),
                             ContactName = sqlDataReader["contactName"].ToString(),
                             ContactMobileNumber = Convert.ToInt64(sqlDataReader["contactMobileNumber"]),
+                            MessageInfo = sqlDataReader["message_info"].ToString()
                         });
                     }
                 }
@@ -148,7 +149,9 @@ namespace PassportGeneratingSystem.DAL
                     SqlCommand sqlCommand = sqlConnection.CreateCommand();
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandText = "SPV_Officer";
-                    sqlCommand.Parameters.AddWithValue("ID", userDetail.ID);
+                    sqlCommand.Parameters.AddWithValue("@ID", userDetail.ID);
+                    sqlCommand.Parameters.AddWithValue("@AdminStatus", "NULL");
+                    sqlCommand.Parameters.AddWithValue("@MessageInfo", userDetail.MessageInfo);
 
                     sqlConnection.Open();
                     check = sqlCommand.ExecuteNonQuery();
@@ -172,6 +175,7 @@ namespace PassportGeneratingSystem.DAL
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandText = "SPR_Officer";
                     sqlCommand.Parameters.AddWithValue("ID", user.ID);
+                    sqlCommand.Parameters.AddWithValue("@MessageInfo", user.MessageInfo);
 
                     sqlConnection.Open();
                     check = sqlCommand.ExecuteNonQuery();

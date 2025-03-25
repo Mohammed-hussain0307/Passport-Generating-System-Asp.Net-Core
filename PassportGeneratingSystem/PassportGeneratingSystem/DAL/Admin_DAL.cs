@@ -126,6 +126,7 @@ namespace PassportGeneratingSystem.DAL
                             EmailID = sqlDataReader["emailID"].ToString(),
                             ContactName = sqlDataReader["contactName"].ToString(),
                             ContactMobileNumber = Convert.ToInt64(sqlDataReader["contactMobileNumber"]),
+                            MessageInfo = sqlDataReader["message_info"].ToString()
                         });
                     }
                 }
@@ -140,17 +141,49 @@ namespace PassportGeneratingSystem.DAL
         public bool Approved(UserDetail user)
         {
             int check = 0;
+            string status = "";
             try
             {
                 using (sqlConnection)
                 {
-                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
-                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
-                    sqlCommand.CommandText = "SPAP_admin";
-                    sqlCommand.Parameters.AddWithValue("ID", user.ID);
-
                     sqlConnection.Open();
-                    check = sqlCommand.ExecuteNonQuery();
+                    using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                    {
+                        sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                        sqlCommand.CommandText = "SPAP_admin";
+                        sqlCommand.Parameters.AddWithValue("@ID", user.ID);
+                        sqlCommand.Parameters.AddWithValue("@MessageInfo", user.MessageInfo);
+
+                        check = sqlCommand.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                    {
+                        sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                        sqlCommand.CommandText = "SPG_User";
+                        sqlCommand.Parameters.AddWithValue("@ID", user.ID);
+                        SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                        while (sqlDataReader.Read())
+                        {
+                            status = sqlDataReader["officer_status"].ToString();
+                        }
+                        sqlDataReader.Close();
+                    }
+                    if (status == "verified")
+                    {
+                         Random random = new Random();
+                         string passportNumber = "IP" + random.Next(1000000, 9999999);
+                         using (SqlCommand sqlCommand = sqlConnection.CreateCommand())
+                         {
+                            sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                            sqlCommand.CommandText = "SPP_Admin";
+                            sqlCommand.Parameters.AddWithValue("@ID", user.ID);
+                            sqlCommand.Parameters.AddWithValue("@PassportNumber", passportNumber);
+
+                            check = sqlCommand.ExecuteNonQuery();
+                         }
+                    }                    
                 }
             }
             finally
@@ -171,9 +204,10 @@ namespace PassportGeneratingSystem.DAL
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.CommandText = "SPRE_Admin";
                     sqlCommand.Parameters.AddWithValue("ID", user.ID);
+                    sqlCommand.Parameters.AddWithValue("@MessageInfo", user.MessageInfo);
 
                     sqlConnection.Open();
-                    check = sqlCommand.ExecuteNonQuery();
+                    check = sqlCommand.ExecuteNonQuery();                    
                 }
             }
             finally

@@ -79,6 +79,8 @@ namespace PassportGeneratingSystem.Models
             public DateOnly BookingDate { get; set; }
 
             public string? status { get; set; }
+            public string? MessageInfo { get; set; }
+            public string? PassportNumber { get; set; }
 
     }
 }

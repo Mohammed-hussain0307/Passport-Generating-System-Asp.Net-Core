@@ -1,0 +1,86 @@
+﻿@model PassportGeneratingSystem.Models.NewUser
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Create Admin";
+    var errorMessage = TempData["Error"]?.ToString();
+}
+
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger">
+        <b>Error: </b>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4 rounded-4" style="width: 400px; margin-top:90px;">
+        <h2 class="text-center text-primary mb-3">Register</h2>
+        <form asp-action="AddAdmin">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="mb-3">
+                <label asp-for="GivenName" class="form-label fw-bold">Given Name</label>
+                <input asp-for="GivenName" class="form-control rounded-pill" placeholder="Enter Your Name" />
+                <span asp-validation-for="GivenName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="SureName" class="form-label fw-bold">Sure Name (Optional)</label>
+                <input asp-for="SureName" class="form-control rounded-pill" placeholder="Enter Father Name" />
+                <span asp-validation-for="SureName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="EmailID" class="form-label fw-bold">Email Address</label>
+                <input asp-for="EmailID" class="form-control rounded-pill" placeholder="Enter Email" />
+                <span asp-validation-for="EmailID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="LoginID" class="form-label fw-bold">Login ID</label>
+                <input asp-for="LoginID" class="form-control rounded-pill" placeholder="Create Username" />
+                <span asp-validation-for="LoginID" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label fw-bold">Password</label>
+                <input asp-for="Password" class="form-control rounded-pill" type="password" placeholder="Enter New Password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ConfirmPassword" class="form-label fw-bold">Confirm Password</label>
+                <input asp-for="ConfirmPassword" class="form-control rounded-pill" type="password" placeholder="Re-enter Password" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="text-center">
+                <input type="submit" value="Register" class="btn btn-primary fw-bold rounded-pill text-center" />
+            </div>
+        </form>
+
+        <div class="text-center mt-3">
+            <a asp-action="AdminMain" class="text-decoration-none">Back to Home</a>
+        </div>
+    </div>
+</div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</body>
+</html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

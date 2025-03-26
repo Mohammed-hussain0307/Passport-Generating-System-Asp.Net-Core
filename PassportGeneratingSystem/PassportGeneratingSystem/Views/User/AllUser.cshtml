@@ -24,7 +24,8 @@
                 <th>Father's Name</th>
                 <th>Mobile Number</th>
                 <th>Email ID</th>
-                <th>Actions</th>
+                <th>Status</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -35,10 +36,20 @@
                     <td>@user.FatherGivenName</td>
                     <td>@user.MobileNumber</td>
                     <td>@user.EmailID</td>
-                    <td class="action-links">
-                        <a href="@Url.Action("Edit", "User", new { id = user.ID })" class="btn btn-apply">Apply Booking</a>
-                        <a onclick="confirmDelete(@user.ID)" class="btn btn-delete">Delete</a>
-                    </td>
+                    <td>@user.status</td>
+                    @if (user.status != "submit")
+                    {
+                        <td class="action-links">
+                            <a href="@Url.Action("Edit", "User", new { id = user.ID })" class="btn btn-apply">Apply Booking</a>
+                            <a onclick="confirmDelete(@user.ID)" class="btn btn-delete">Delete</a>
+                        </td>
+                    }
+                    else if (user.PassportNumber?.Length > 0)
+                    {
+                        <td class="action-links">
+                            <a href="@Url.Action("Edit", "User", new { id = user.ID })" class="btn btn-download">Download</a>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>

@@ -26,7 +26,7 @@ namespace PassportGeneratingSystem.Controllers
             bool isAdded = false;
 
                 if (ModelState.IsValid)
-                {
+                {                    
                     isAdded = userDetail_DAL.Register(userDetail,userId);
                     if (isAdded)
                     {
@@ -81,33 +81,6 @@ namespace PassportGeneratingSystem.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //public IActionResult Edit(UserDetail userDetail)
-        //{
-        //    try
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            bool isUpdate = userDetail_DAL.UpdateUser(userDetail);
-
-        //            if (isUpdate)
-        //            {
-        //                TempData["Success"] = "Your detail updated";
-        //            }
-        //            else
-        //            {
-        //                TempData["Error"] = "Cant update your detail";
-        //            }
-        //        }
-        //    }
-        //    catch(Exception e)
-        //    {
-        //        TempData["Error"] = e.Message;
-        //        return View();
-        //    }
-        //    return View("~/Views/Home/UserMain.cshtml");
-        //}
-
         [HttpDelete]
         public IActionResult Delete(int id)
         {
@@ -133,7 +106,7 @@ namespace PassportGeneratingSystem.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(UserDetail user, string actionType)
+        public IActionResult Edit(UserDetail user, string actionType,IFormFile file)
         {
             try
             {
@@ -141,6 +114,15 @@ namespace PassportGeneratingSystem.Controllers
                 {
                     if (ModelState.IsValid)
                     {
+                        if (file != null && file.Length > 0)
+                        {
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                file.CopyTo(memoryStream);
+                                user.Document = memoryStream.ToArray();
+                            }
+                        }
+
                         bool isUpdate = userDetail_DAL.UpdateUser(user);
 
                         if (isUpdate)

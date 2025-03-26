@@ -1,0 +1,18 @@
+﻿@model PassportGeneratingSystem.Models.UserDetail
+
+@{
+    Layout = null;
+}
+<h2>View PDF</h2>
+
+@if (Model?.Document != null)
+{
+    <iframe src="@Url.Action("ViewPDF", "User", new { id = Model.ID })"
+            width="100%" height="600px">
+    </iframe>
+}
+else
+{
+    <p>No PDF file available.</p>
+}
+

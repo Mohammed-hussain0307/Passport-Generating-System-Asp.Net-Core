@@ -54,6 +54,7 @@ namespace PassportGeneratingSystem.DAL
                     sqlCommand.Parameters.AddWithValue("@EmailID", userDetail.EmailID);
                     sqlCommand.Parameters.AddWithValue("@ContactName", userDetail.ContactName);
                     sqlCommand.Parameters.AddWithValue("@ContactMobileNumber", userDetail.ContactMobileNumber);
+                    sqlCommand.Parameters.AddWithValue("@Document", userDetail.Document);
                     sqlCommand.Parameters.AddWithValue("@UserID", userId);
 
                     sqlConnection.Open();
@@ -91,7 +92,9 @@ namespace PassportGeneratingSystem.DAL
                             GivenName = sqlDataReader["givenName"].ToString(),
                             FatherGivenName = sqlDataReader["fatherGivenName"].ToString(),
                             MobileNumber = Convert.ToInt64(sqlDataReader["mobileNumber"]),
-                            EmailID = sqlDataReader["emailID"].ToString()
+                            EmailID = sqlDataReader["emailID"].ToString(),
+                            status = sqlDataReader["status"].ToString(),
+                            PassportNumber = sqlDataReader["passport_number"].ToString()
                         });
                     }
                 }

@@ -73,14 +73,12 @@ namespace PassportGeneratingSystem.Models
 
             [Required]
             public long ContactMobileNumber { get; set; }
-
             public int UserID { get; set; }
-            public string? BookingPlace { get; set; }
-            public DateOnly BookingDate { get; set; }
-
             public string? status { get; set; }
+            public string? OfficerStatus { get; set; }
             public string? MessageInfo { get; set; }
             public string? PassportNumber { get; set; }
+            public byte[]? Document { get; set; }
 
     }
 }

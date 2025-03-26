@@ -52,3 +52,9 @@ function confirmDelete(userId) {
             })
     }
 }
+
+document.getElementById("adminDetailToggle").addEventListener("click", function (event) {
+    event.preventDefault();
+    var menu = document.getElementById("adminOptions");
+    menu.style.display = (menu.style.display === "none" || menu.style.display === "") ? "block" : "none";
+});

@@ -121,5 +121,77 @@ namespace PassportGeneratingSystem.Controllers
                 return RedirectToAction("AdminMain");
             }
         }
+
+        public IActionResult ViewPdf(int id)
+        {
+            try
+            {
+                var viewPdf = admin.GetApplication(id).FirstOrDefault();
+                Console.WriteLine(viewPdf?.Document?.Length);
+                if(viewPdf?.Document != null && viewPdf.Document.Length > 0)
+                {
+                    return File(viewPdf.Document, "application/pdf");
+                }
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("AdminMain");
+            }
+            return View();
+        }
+
+        public IActionResult AllAdmin()
+        {
+            try
+            {
+                var allAdmin = admin.ViewAdmin();
+                return View(allAdmin);
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("AdminMain");
+            }
+        }
+
+        public IActionResult AddAdmin()
+        {
+            return View();
+        }
+
+            [HttpPost]
+        public IActionResult AddAdmin(NewUser addAdmin)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (addAdmin.Password == addAdmin.ConfirmPassword)
+                    {
+                        bool isAdded = admin.CreateAdmin(addAdmin);
+                        if (isAdded)
+                        {
+                            TempData["Success"] = "Admin detail added successfully";
+                        }
+                        else
+                        {
+                            TempData["Error"] = "Cant add admin detail";
+                        }
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Password doesnot match";
+                        return View();
+                    }
+                }
+                return RedirectToAction("AdminMain");
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("AdminMain");
+            }
+        }
     }
 }

@@ -70,7 +70,9 @@ namespace PassportGeneratingSystem.DAL
                             GivenName = sqlDataReader["givenName"].ToString(),
                             FatherGivenName = sqlDataReader["fatherGivenName"].ToString(),
                             MobileNumber = Convert.ToInt64(sqlDataReader["mobileNumber"]),
-                            EmailID = sqlDataReader["emailID"].ToString()
+                            EmailID = sqlDataReader["emailID"].ToString(),
+                            status = sqlDataReader["admin_status"].ToString(),
+                            Document = sqlDataReader["document"] as byte[]
                         });
                     }
                 }
@@ -126,6 +128,7 @@ namespace PassportGeneratingSystem.DAL
                             EmailID = sqlDataReader["emailID"].ToString(),
                             ContactName = sqlDataReader["contactName"].ToString(),
                             ContactMobileNumber = Convert.ToInt64(sqlDataReader["contactMobileNumber"]),
+                            Document = sqlDataReader["document"] as byte[],
                             MessageInfo = sqlDataReader["message_info"].ToString()
                         });
                     }
@@ -208,6 +211,65 @@ namespace PassportGeneratingSystem.DAL
 
                     sqlConnection.Open();
                     check = sqlCommand.ExecuteNonQuery();                    
+                }
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return check > 0;
+        }
+
+        public List<NewUser> ViewAdmin()
+        {
+            List<NewUser> allAdmin = new List<NewUser>();
+            try
+            {
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPA_Admin";
+
+                    sqlConnection.Open();
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                    while (sqlDataReader.Read())
+                    {
+                        allAdmin.Add(new NewUser
+                        {
+                            ID = Convert.ToInt32(sqlDataReader["id"]),
+                            GivenName = sqlDataReader["admin_name"].ToString(),
+                            EmailID = sqlDataReader["email_id"].ToString(),
+                            LoginID = sqlDataReader["admin_id"].ToString()
+                        });
+                    }
+                }
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return allAdmin;
+        }
+
+        public bool CreateAdmin(NewUser newAdmin)
+        {
+            int check = 0;
+            try
+            {
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPC_Admin";
+                    sqlCommand.Parameters.AddWithValue("@AdminName", newAdmin.GivenName);
+                    sqlCommand.Parameters.AddWithValue("@EmailID", newAdmin.EmailID);
+                    sqlCommand.Parameters.AddWithValue("@AdminID", newAdmin.LoginID);
+                    sqlCommand.Parameters.AddWithValue("@AdminPassword", newAdmin.Password);
+
+                    sqlConnection.Open();
+                    check = sqlCommand.ExecuteNonQuery();
                 }
             }
             finally

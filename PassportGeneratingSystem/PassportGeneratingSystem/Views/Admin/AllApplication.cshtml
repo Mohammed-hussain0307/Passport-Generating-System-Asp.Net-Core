@@ -22,6 +22,7 @@
                 <th>Father's Name</th>
                 <th>Mobile Number</th>
                 <th>Email ID</th>
+                <th>Status</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -33,9 +34,13 @@
                     <td>@user.FatherGivenName</td>
                     <td>@user.MobileNumber</td>
                     <td>@user.EmailID</td>
-                    <td class="action-links">
-                        <a href="@Url.Action("GetByID", "Admin", new { id = user.ID })" class="btn btn-apply">Verify Details</a>
-                    </td>
+                    <td>@user.status</td>
+                    @if (user.status != "approve")
+                    {
+                        <td class="action-links">
+                            <a href="@Url.Action("GetByID", "Admin", new { id = user.ID })" class="btn btn-apply">Verify Details</a>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>
@@ -43,4 +48,3 @@
     <script src="~/js/site.js"></script>
 </body>
 </html>
-

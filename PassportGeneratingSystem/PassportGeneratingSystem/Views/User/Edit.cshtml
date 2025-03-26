@@ -37,7 +37,7 @@ else if (errorMessage != null)
 
 <h4>Reverify your details</h4>
 <hr />
-    <form asp-action="Edit" method="post">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
         <input type="hidden" asp-for="ID" />
 
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -199,6 +199,18 @@ else if (errorMessage != null)
                     <div class="col-md-6 mb-3">
                         <label asp-for="ContactMobileNumber">Mobile Number</label>
                         <input asp-for="ContactMobileNumber" type="tel" class="form-control" placeholder="Enter mobile number" required />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header bg-primary text-white">Supported Document</div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label>Upload PDF Document</label>
+                        <input type="file" name="file" class="form-control" accept=".pdf" />
                     </div>
                 </div>
             </div>

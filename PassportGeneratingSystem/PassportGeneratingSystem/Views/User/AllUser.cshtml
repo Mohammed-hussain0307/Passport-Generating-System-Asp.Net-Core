@@ -20,6 +20,7 @@
     <table>
         <thead>
             <tr>
+                <th>Application ID</th>
                 <th>Given Name</th>
                 <th>Father's Name</th>
                 <th>Mobile Number</th>
@@ -32,6 +33,7 @@
             @foreach (var user in Model)
             {
                 <tr>
+                    <td>@user.ID</td>
                     <td>@user.GivenName</td>
                     <td>@user.FatherGivenName</td>
                     <td>@user.MobileNumber</td>

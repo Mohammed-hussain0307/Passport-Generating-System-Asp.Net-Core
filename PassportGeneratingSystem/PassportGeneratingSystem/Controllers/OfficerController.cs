@@ -123,5 +123,81 @@ namespace PassportGeneratingSystem.Controllers
                 return RedirectToAction("OfficerMain");
             }
         }
+
+        public IActionResult ViewPdf(int id)
+        {
+            try
+            {
+                var viewPdf = officer.GetApplication(id).FirstOrDefault();
+
+                if (viewPdf?.Document != null || viewPdf?.Document?.Length > 0)
+                {
+                    return File(viewPdf.Document, "application/pdf");
+                }
+                else
+                {
+                    TempData["Error"] = "File not found";
+                    return RedirectToAction("AdminMain");
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("AdminMain");
+            }
+        }
+
+        public IActionResult AllOfficer()
+        {
+            try
+            {
+                var allofficer = officer.ViewOfficer();
+                return View(allofficer);
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("OfficerMain");
+            }
+        }
+
+        public IActionResult AddOfficer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddOfficer(NewUser addOfficer)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    if (addOfficer.Password == addOfficer.ConfirmPassword)
+                    {
+                        bool isAdded = officer.CreateOfficer(addOfficer);
+                        if (isAdded)
+                        {
+                            TempData["Success"] = "Admin detail added successfully";
+                        }
+                        else
+                        {
+                            TempData["Error"] = "Cant add admin detail";
+                        }
+                    }
+                    else
+                    {
+                        TempData["Error"] = "Password doesnot match";
+                        return View();
+                    }
+                }
+                return RedirectToAction("OfficerMain");
+            }
+            catch (Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("OfficerMain");
+            }
+        }
     }
 }

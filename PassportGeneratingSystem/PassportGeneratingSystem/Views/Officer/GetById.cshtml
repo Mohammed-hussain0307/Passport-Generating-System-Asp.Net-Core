@@ -177,6 +177,21 @@ else if (errorMessage != null)
         </div>
 
         <div class="card mb-3">
+            <div class="card-header bg-primary text-white">Supported Document</div>
+            <div class="card-body">
+                <div class="form-row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Document">Document</label>
+                        @if (Model.Document != null)
+                        {
+                            <a href="@Url.Action("ViewPdf", "Admin", new { id = Model.ID })" class="btn btn-primary" target="_blank">View pdf</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
             <div class="card-header bg-primary text-white">Message About Application</div>
             <div class="card-body">
                 <div class="form-row">

@@ -188,5 +188,64 @@ namespace PassportGeneratingSystem.DAL
             }
             return check > 0;
         }
+
+        public List<NewUser> ViewOfficer()
+        {
+            List<NewUser> allAdmin = new List<NewUser>();
+            try
+            {
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPA_AllOfficer";
+
+                    sqlConnection.Open();
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+
+                    while (sqlDataReader.Read())
+                    {
+                        allAdmin.Add(new NewUser
+                        {
+                            ID = Convert.ToInt32(sqlDataReader["id"]),
+                            GivenName = sqlDataReader["officer_name"].ToString(),
+                            EmailID = sqlDataReader["email_id"].ToString(),
+                            LoginID = sqlDataReader["officer_id"].ToString()
+                        });
+                    }
+                }
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return allAdmin;
+        }
+
+        public bool CreateOfficer(NewUser newAdmin)
+        {
+            int check = 0;
+            try
+            {
+                using (sqlConnection)
+                {
+                    SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+                    sqlCommand.CommandText = "SPC_Officer";
+                    sqlCommand.Parameters.AddWithValue("@OfficerName", newAdmin.GivenName);
+                    sqlCommand.Parameters.AddWithValue("@EmailID", newAdmin.EmailID);
+                    sqlCommand.Parameters.AddWithValue("@OfficerID", newAdmin.LoginID);
+                    sqlCommand.Parameters.AddWithValue("@OfficerPassword", newAdmin.Password);
+
+                    sqlConnection.Open();
+                    check = sqlCommand.ExecuteNonQuery();
+                }
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+            return check > 0;
+        }
     }
 }

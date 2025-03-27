@@ -1,0 +1,45 @@
+﻿@model List<PassportGeneratingSystem.Models.NewUser>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Application Detail</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    <h4>Officer Detail</h4>
+    <hr />
+
+    <table class="admin">
+        <thead>
+            <tr>
+                <th>Given Name</th>
+                <th>Email ID</th>
+                <th>Admin ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.GivenName</td>
+                    <td>@user.EmailID</td>
+                    <td>@user.LoginID</td>
+                    <td class="action-links">
+                        <a href="@Url.Action("Delete", "Admin", new { id = user.ID })" class="btn btn-delete">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <script src="~/js/site.js"></script>
+</body>
+</html>

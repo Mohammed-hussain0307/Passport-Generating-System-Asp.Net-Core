@@ -161,5 +161,34 @@ namespace PassportGeneratingSystem.Controllers
             }
             return View("~/Views/Home/UserMain.cshtml");
         }
+
+        public IActionResult TrackStatus()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult TrackStatus(int id)
+        {
+            try
+            {
+                var status = userDetail_DAL.GetUserById(id).FirstOrDefault();
+
+                if (status?.status != null)
+                {
+                    return View(status);
+                }
+                else
+                {
+                    TempData["Error"] = "Application not found";
+                    return RedirectToAction("Index");
+                }
+            }
+            catch(Exception e)
+            {
+                TempData["Error"] = e.Message;
+                return RedirectToAction("Index");
+            }
+        }
     }
 }

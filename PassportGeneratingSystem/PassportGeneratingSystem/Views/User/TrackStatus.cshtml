@@ -1,0 +1,41 @@
+﻿@model PassportGeneratingSystem.Models.UserDetail
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>TrackStatus</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+
+    <form asp-action="TrackStatus" method="post">
+        <div class="form-group track">
+            <label asp-for="ID">Enter Application ID</label>
+            <input asp-for="ID" class="form-control" required />
+        </div>
+        <button type="submit" class="check btn-primary">Check Status</button>
+    </form>
+
+    @if (Model != null && Model.GivenName != null)
+    {
+        <h4>Application Details</h4>
+        <p><strong>Given Name:</strong> @Model.status</p>
+        <p><strong>Father's Name:</strong> @Model.OfficerStatus</p>
+        <p><strong>Mobile Number:</strong> @Model.AdminStatus</p>
+    }
+
+<div>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+</body>
+</html>

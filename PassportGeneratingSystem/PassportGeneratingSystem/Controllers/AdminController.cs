@@ -127,10 +127,15 @@ namespace PassportGeneratingSystem.Controllers
             try
             {
                 var viewPdf = admin.GetApplication(id).FirstOrDefault();
-                Console.WriteLine(viewPdf?.Document?.Length);
-                if(viewPdf?.Document != null && viewPdf.Document.Length > 0)
+
+                if (viewPdf?.Document != null || viewPdf?.Document?.Length > 0)
                 {
                     return File(viewPdf.Document, "application/pdf");
+                }
+                else
+                {
+                    TempData["Error"] = "File not found";
+                    return RedirectToAction("AdminMain");
                 }
             }
             catch(Exception e)
@@ -138,7 +143,6 @@ namespace PassportGeneratingSystem.Controllers
                 TempData["Error"] = e.Message;
                 return RedirectToAction("AdminMain");
             }
-            return View();
         }
 
         public IActionResult AllAdmin()

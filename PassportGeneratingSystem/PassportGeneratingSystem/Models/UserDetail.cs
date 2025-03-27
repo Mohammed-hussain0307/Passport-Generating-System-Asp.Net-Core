@@ -76,6 +76,7 @@ namespace PassportGeneratingSystem.Models
             public int UserID { get; set; }
             public string? status { get; set; }
             public string? OfficerStatus { get; set; }
+            public string? AdminStatus { get; set; }
             public string? MessageInfo { get; set; }
             public string? PassportNumber { get; set; }
             public byte[]? Document { get; set; }

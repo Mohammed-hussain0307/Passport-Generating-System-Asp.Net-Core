@@ -151,6 +151,9 @@ namespace PassportGeneratingSystem.DAL
                             EmailID = sqlDataReader["emailID"].ToString(),
                             ContactName = sqlDataReader["contactName"].ToString(),
                             ContactMobileNumber = Convert.ToInt64(sqlDataReader["contactMobileNumber"]),
+                            status = sqlDataReader["status"].ToString(),
+                            OfficerStatus = sqlDataReader["officer_status"].ToString(),
+                            AdminStatus = sqlDataReader["admin_status"].ToString()
                         });
                     }
                 }

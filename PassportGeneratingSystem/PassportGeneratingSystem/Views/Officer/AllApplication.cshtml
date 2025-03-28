@@ -35,7 +35,13 @@
                     <td>@user.MobileNumber</td>
                     <td>@user.EmailID</td>
                     <td>@user.status</td>
-                    @if (user.status != "verified" || user.status != "reject")
+                    @if (user.status != "reject")
+                    {
+                        <td class="action-links">
+                            <a href="@Url.Action("GetByID", "Officer", new { id = user.ID })" class="btn btn-apply">Verify Details</a>
+                        </td>
+                    }
+                    else if (user.status != "verified")
                     {
                         <td class="action-links">
                             <a href="@Url.Action("GetByID", "Officer", new { id = user.ID })" class="btn btn-apply">Verify Details</a>

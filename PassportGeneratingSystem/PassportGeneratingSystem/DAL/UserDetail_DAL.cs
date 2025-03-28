@@ -54,7 +54,6 @@ namespace PassportGeneratingSystem.DAL
                     sqlCommand.Parameters.AddWithValue("@EmailID", userDetail.EmailID);
                     sqlCommand.Parameters.AddWithValue("@ContactName", userDetail.ContactName);
                     sqlCommand.Parameters.AddWithValue("@ContactMobileNumber", userDetail.ContactMobileNumber);
-                    sqlCommand.Parameters.AddWithValue("@Document", userDetail.Document);
                     sqlCommand.Parameters.AddWithValue("@UserID", userId);
 
                     sqlConnection.Open();
@@ -249,6 +248,7 @@ namespace PassportGeneratingSystem.DAL
                     sqlCommand.CommandText = "SPB_User";
                     sqlCommand.Parameters.AddWithValue("ID", userDetail.ID);
                     sqlCommand.Parameters.AddWithValue("@Status", userDetail.status);
+                    sqlCommand.Parameters.AddWithValue("@Document", userDetail.Document);
 
                     sqlConnection.Open();
                     check = sqlCommand.ExecuteNonQuery();

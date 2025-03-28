@@ -137,13 +137,13 @@ namespace PassportGeneratingSystem.Controllers
                 else
                 {
                     TempData["Error"] = "File not found";
-                    return RedirectToAction("AdminMain");
+                    return RedirectToAction("OfficerMain");
                 }
             }
             catch (Exception e)
             {
                 TempData["Error"] = e.Message;
-                return RedirectToAction("AdminMain");
+                return RedirectToAction("OfficerMain");
             }
         }
 

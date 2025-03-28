@@ -103,6 +103,7 @@ namespace PassportGeneratingSystem.DAL
                     {
                         user.Add(new UserDetail
                         {
+                            ID = Convert.ToInt32(sqlDataReader["id"]),
                             GivenName = sqlDataReader["givenName"].ToString(),
                             SureName = sqlDataReader["sureName"].ToString(),
                             Gender = sqlDataReader["gender"].ToString(),
@@ -128,6 +129,7 @@ namespace PassportGeneratingSystem.DAL
                             EmailID = sqlDataReader["emailID"].ToString(),
                             ContactName = sqlDataReader["contactName"].ToString(),
                             ContactMobileNumber = Convert.ToInt64(sqlDataReader["contactMobileNumber"]),
+                            Document = sqlDataReader["document"] as byte[],
                             MessageInfo = sqlDataReader["message_info"].ToString()
                         });
                     }

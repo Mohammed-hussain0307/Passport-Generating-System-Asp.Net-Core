@@ -34,8 +34,19 @@
                     <td>@user.FatherGivenName</td>
                     <td>@user.MobileNumber</td>
                     <td>@user.EmailID</td>
-                    <td>@user.status</td>
-                    @if (user.status != "approve")
+                    @if (user.OfficerStatus == "verified")
+                    {
+                        <td>approved</td>
+                    }
+                    else if (user.AdminStatus == "reject")
+                    {
+                        <td>reject</td>
+                    }
+                    else
+                    {
+                        <td>pending</td>
+                    }
+                    @if (user.AdminStatus == null || user.OfficerStatus == "reject")
                     {
                         <td class="action-links">
                             <a href="@Url.Action("GetByID", "Admin", new { id = user.ID })" class="btn btn-apply">Verify Details</a>

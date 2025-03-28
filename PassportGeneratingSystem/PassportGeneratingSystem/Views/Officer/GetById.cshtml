@@ -184,7 +184,7 @@ else if (errorMessage != null)
                         <label asp-for="Document">Document</label>
                         @if (Model.Document != null)
                         {
-                            <a href="@Url.Action("ViewPdf", "Admin", new { id = Model.ID })" class="btn btn-primary" target="_blank">View pdf</a>
+                            <a href="@Url.Action("ViewPdf", "Officer", new { id = Model.ID })" class="btn btn-primary" target="_blank">View pdf</a>
                         }
                     </div>
                 </div>

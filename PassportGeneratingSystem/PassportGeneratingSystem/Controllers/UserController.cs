@@ -137,22 +137,34 @@ namespace PassportGeneratingSystem.Controllers
                     }
                 }
                 else if (actionType == "apply")
-                {
-                    user.status = "submit";
-                    bool isBooked = userDetail_DAL.Booking(user);
-
-                    if (isBooked)
+                {       
+                    if (ModelState.IsValid)
                     {
-                        TempData["Success"] = "Successfully apply";
+                        if (file != null && file.Length > 0)
+                        {
+                            using (var memoryStream = new MemoryStream())
+                            {
+                                file.CopyTo(memoryStream);
+                                user.Document = memoryStream.ToArray();
+                            }
+                        }
+
+                        user.status = "submit";
+                        bool isBooked = userDetail_DAL.Booking(user);
+
+                        if (isBooked)
+                        {
+                            TempData["Success"] = "Successfully apply";
+                        }
+                        else
+                        {
+                            TempData["Error"] = "Cant apply your form";
+                        }
                     }
                     else
                     {
-                        TempData["Error"] = "Cant apply your form";
+                        TempData["Error"] = "Some error in this user detail";
                     }
-                }
-                else
-                {
-                    TempData["Error"] = "Some error in this user detail";
                 }
             }
             catch (Exception e)

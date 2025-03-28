@@ -71,7 +71,8 @@ namespace PassportGeneratingSystem.DAL
                             FatherGivenName = sqlDataReader["fatherGivenName"].ToString(),
                             MobileNumber = Convert.ToInt64(sqlDataReader["mobileNumber"]),
                             EmailID = sqlDataReader["emailID"].ToString(),
-                            status = sqlDataReader["admin_status"].ToString(),
+                            AdminStatus = sqlDataReader["admin_status"].ToString(),
+                            OfficerStatus = sqlDataReader["officer_status"].ToString(),
                             Document = sqlDataReader["document"] as byte[]
                         });
                     }
